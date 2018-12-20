@@ -1,0 +1,50 @@
+.d-flex{
+    display: flex;
+    width: 100%;
+}
+
+.fw{
+    flex-wrap: wrap;
+
+}
+.jcc{
+    justify-content: center;
+}
+
+.aic{
+    align-items: center;
+}
+
+.vh90{
+height: 90vh;
+}
+.backImgStyles{
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.account-text{
+    color: white;
+    font-weight: bold;
+    font-size: 1.5em;
+}
+
+.left-side{
+    padding: 8px;
+    margin: 8px;
+    border: 1px solid darksalmon;
+    width: 47%;
+    height: calc(100vh - 100px);
+}
+
+.right-side{
+     border: 1px solid darksalmon;
+     width: 47%;
+     height: calc(100vh - 100px);
+}
+
+.layout-body{
+     height: calc(100vh - 80px);
+}
+
