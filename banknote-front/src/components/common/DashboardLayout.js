@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Layout, Menu, Breadcrumb, Icon, message, Card, Avatar } from 'antd'
-import { withRouter } from 'react-router-dom';
+import { withRouter, NavLink } from 'react-router-dom';
 import { logoutUser } from '../../API/Auth';
 const { Meta } = Card;
 const { Content, Sider } = Layout;
@@ -57,29 +57,25 @@ class DashboardLayout extends Component {
 								/>
 							</Card>
 						</div>
-						<Menu theme="dark" defaultSelectedKeys={['dashboard']} mode="inline">
+						<Menu theme="dark" mode="inline">
 							<Menu.Item key="dashboard">
-								<Icon type="layout" />
-								<span>Dashboard</span>
+								<NavLink to="/dashboard">
+									<Icon type="layout" />
+									<span>Dashboard</span>
+								</NavLink>
 							</Menu.Item>
-							<Menu.Item key="2">
-								<Icon type="desktop" />
-								<span>Option 2</span>
+							<Menu.Item key="accounts">
+								<NavLink to="/accounts">
+									<Icon type="desktop" />
+									<span>Cuentas</span>
+								</NavLink>
 							</Menu.Item>
 							<SubMenu
 								key="sub1"
-								title={<span><Icon type="user" /><span>User</span></span>}
+								title={<span><Icon type="user" /><span>Perfil</span></span>}
 							>
-								<Menu.Item key="3">Tom</Menu.Item>
-								<Menu.Item key="4">Bill</Menu.Item>
-								<Menu.Item key="5">Alex</Menu.Item>
-							</SubMenu>
-							<SubMenu
-								key="sub2"
-								title={<span><Icon type="team" /><span>Team</span></span>}
-							>
-								<Menu.Item key="6">Team 1</Menu.Item>
-								<Menu.Item key="8">Team 2</Menu.Item>
+								<Menu.Item key="3">Principal</Menu.Item>
+								<Menu.Item key="4">Configuraciones</Menu.Item>
 							</SubMenu>
 							<Menu.Item key="logout" onClick={onLogout}>
 								<Icon type="logout" />

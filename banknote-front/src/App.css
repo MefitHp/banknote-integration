@@ -33,18 +33,25 @@ height: 90vh;
 .left-side{
     padding: 8px;
     margin: 8px;
-    border: 1px solid darksalmon;
     width: 47%;
     height: calc(100vh - 100px);
 }
 
 .right-side{
-     border: 1px solid darksalmon;
      width: 47%;
      height: calc(100vh - 100px);
+     overflow-y: scroll;
+}
+
+.right-side .box {
+    overflow-y: scroll;
+    height: 48%;
 }
 
 .layout-body{
      height: calc(100vh - 80px);
 }
 
+.vh{
+    height: calc(100vh - 100px);
+}

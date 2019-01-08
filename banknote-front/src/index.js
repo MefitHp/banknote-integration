@@ -5,6 +5,7 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import 'antd/dist/antd.css'
 import { BrowserRouter } from 'react-router-dom'
+import 'moment/locale/es';
 
 const WithRouter = () => (
     <BrowserRouter>

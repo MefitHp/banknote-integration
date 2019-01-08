@@ -8,8 +8,8 @@ class Home extends Component {
 	}
 	render() {
 		return (
-			<div>
-				Home container
+			<div className="d-flex jcc aic" style={{ height: '90vh' }}>
+				<h1>Home page</h1>
 			</div>
 		)
 	}

@@ -4,7 +4,6 @@ const api_key_url = '?api_key=dd891f88f7b38e9483e865780076459f'
 const api_key = "dd891f88f7b38e9483e865780076459f"
 
 
-
 export const getAccouts = (id_user, token) => {
     return axios.get(`${url}/accounts?id_user=${id_user}&api_key=${api_key}&token=${token}`)
         .then(r => r)

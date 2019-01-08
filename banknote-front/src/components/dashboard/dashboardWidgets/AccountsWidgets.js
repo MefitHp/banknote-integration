@@ -1,21 +1,21 @@
 import React from 'react'
-import { List, Avatar, Badge } from 'antd'
+import { List, Button, Avatar, Badge } from 'antd'
 import { Link } from 'react-router-dom'
 
-const AccountsWidgets = ({ accounts = [] }) => (
+const AccountsWidgets = ({ accounts }) => (
     <div>
         <List
             itemLayout="horizontal"
             dataSource={accounts}
             renderItem={account => (
-                <List.Item actions={[<Link to={`/account/${account.id_credential}`}>Ver detalle</Link>]}
-                    style={{ margin: 8 }}>
+                <List.Item actions={[<Link to={`/accounts/${account.id_credential}`}>Ver detalle</Link>]}
+                >
                     <List.Item.Meta
                         avatar={<Avatar src={`https://www.paybook.com/s/${account.site.avatar}`} />}
                         title={`${account.site.organization} | ${account.site.name}`}
                         description={
                             <div>
-                                <h5>{account.extra.owner}</h5>
+                                <h5>{account.extra.owner ? account.extra.owner : ''}</h5>
                                 <p><strong>Saldo disponible: </strong> <Badge status={account.balance > 1000 ? "success" : account.balance > 500 ? "warning" : "error"} />${account.balance} {account.currency}</p>
                             </div>
                         }
@@ -23,6 +23,9 @@ const AccountsWidgets = ({ accounts = [] }) => (
                 </List.Item>
             )}
         />
+        <div className="d-flex aic jcc">
+            <a href="/accounts"><Button>Agregar cuenta</Button></a>
+        </div>
     </div>
 )
 
