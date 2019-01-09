@@ -87,6 +87,7 @@ const index = require('./routes/index');
 app.use('/', index);
 const authRoutes = require('./routes/auth');
 app.use('/api', authRoutes);
-
+const paymentRoutes = require('./routes/payments')
+app.use('/payments', paymentRoutes)
 
 module.exports = app;

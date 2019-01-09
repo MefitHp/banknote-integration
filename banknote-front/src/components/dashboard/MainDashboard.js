@@ -87,59 +87,78 @@ class MainDashboard extends Component {
             <Fragment>
                 <div className="d-flex fw jcc aic">
                     <div className="left-side" style={{ overflowY: 'scroll' }}>
-                        <Collapse bordered={false} defaultActiveKey={['1']} accordion>
-                            {accounts.length > 0 ?
-                                accounts.map((account, index) => {
-                                    return (
-                                        <Panel header={`Cuenta #${index + 1}: ${account.site.organization}`} key={index + 1} style={customPanelStyle}>
-                                            <TransactionCard account={account} />
-                                            <div className="d-flex aic">
-                                                <Link to={`/accounts/${account.id_credential}`}><Button>Ver todas las transacciones</Button></Link>
-                                            </div>
-                                        </Panel>
-                                    )
-                                })
-                                :
-                                ''
-                            }
-                        </Collapse>
+                        <div className="box">
+                            <Collapse bordered={false} defaultActiveKey={['1']} accordion>
+                                {accounts.length > 0 ?
+                                    accounts.map((account, index) => {
+                                        return (
+                                            <Panel header={`Cuenta #${index + 1}: ${account.site.organization}`} key={index + 1} style={customPanelStyle}>
+                                                <TransactionCard account={account} />
+                                                <div className="d-flex aic">
+                                                    <Link to={`/accounts/${account.id_credential}`}><Button>Ver todas las transacciones</Button></Link>
+                                                </div>
+                                            </Panel>
+                                        )
+                                    })
+                                    :
+                                    ''
+                                }
+                            </Collapse>
+                        </div>
+                        <div className="box">
+                            <div style={{ padding: 8 }}>
+                                <h4>Pagos recurrentes y metas: </h4>
+                                <Link to="/payments"><Button>Agregar pago recurrente.</Button></Link>
+                            </div>
+                        </div>
                     </div>
                     <div className="right-side">
                         <div className="box">
                             {accounts.length > 0 ?
-                                <AccountsWidgets accounts={accounts} />
+                                <Fragment>
+                                    <h4>Cuentas disponibles: </h4>
+                                    <AccountsWidgets accounts={accounts} />
+                                    <div className="d-flex jcc aic">
+                                        <a href="/accounts"><Button>Agregar cuenta</Button></a>
+                                    </div>
+                                </Fragment>
                                 :
                                 <div >
-                                    <h2>No hay cuentas agregadas</h2>
-                                    <Button>Agregar cuenta</Button>
+                                    <h2 style={{ textAlign: 'center' }}>No hay cuentas agregadas</h2>
+                                    <a href="/accounts"><Button>Agregar cuenta</Button></a>
                                 </div>
                             }
                         </div>
                         <div className="box">
                             {this.state.isLoaded ?
-                                <Bar
-                                    data={charData}
-                                    options={{
-                                        title: {
-                                            display: true,
-                                            text: 'Gastos de los últimos 3 meses',
-                                            fontSize: 25
-                                        },
-                                        legend: {
-                                            display: false,
-                                            position: 'right'
-                                        },
-                                        responsive: true,
-                                        scales: {
-                                            yAxes: [{
-                                                ticks: {
-                                                    beginAtZero: true
-                                                }
-                                            }]
-                                        }
-                                    }}
-                                /> :
-                                <div>Loading...</div>
+                                <div style={{ height: '100%' }} className="d-flex jcc aic">
+                                    <Bar
+                                        data={charData}
+                                        options={{
+                                            title: {
+                                                display: true,
+                                                text: 'Gastos de los últimos 3 meses',
+                                                fontSize: 25
+                                            },
+                                            legend: {
+                                                display: false,
+                                                position: 'right'
+                                            },
+                                            responsive: true,
+                                            scales: {
+                                                yAxes: [{
+                                                    ticks: {
+                                                        beginAtZero: true
+                                                    }
+                                                }]
+                                            }
+                                        }}
+                                    />
+                                </div>
+                                :
+                                <div style={{ height: '100%' }} className="d-flex jcc aic">
+                                    <img style={{ maxHeight: 200 }} src="https://www.tecmam.com.mx/images/icons/loading.gif" alt="loading" />
+                                </div>
                             }
                         </div>
                     </div>

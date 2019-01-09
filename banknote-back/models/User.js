@@ -13,6 +13,10 @@ const userSchema = new Schema({
     unique: 'El email ya está registrado',
   },
   id_user: String,
+  payments: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Payment',
+  }],
 }, {
     timestamps: {
       createdAt: 'created_at',

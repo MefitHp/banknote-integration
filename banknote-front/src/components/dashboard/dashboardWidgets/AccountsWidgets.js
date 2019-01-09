@@ -1,5 +1,5 @@
 import React from 'react'
-import { List, Button, Avatar, Badge } from 'antd'
+import { List, Avatar, Badge } from 'antd'
 import { Link } from 'react-router-dom'
 
 const AccountsWidgets = ({ accounts }) => (
@@ -23,9 +23,6 @@ const AccountsWidgets = ({ accounts }) => (
                 </List.Item>
             )}
         />
-        <div className="d-flex aic jcc">
-            <a href="/accounts"><Button>Agregar cuenta</Button></a>
-        </div>
     </div>
 )
 

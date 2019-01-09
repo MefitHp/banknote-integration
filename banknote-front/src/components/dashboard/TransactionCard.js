@@ -10,7 +10,7 @@ const TransactionCard = ({ account }) => {
                     :
                     <List
                         itemLayout="horizontal"
-                        dataSource={account.transactions.splice(0, 6)}
+                        dataSource={account.transactions.splice(0, 5)}
                         renderItem={transaction => (
                             <List.Item
                                 style={{ margin: 8 }}>

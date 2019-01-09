@@ -44,15 +44,19 @@ class AccountsDetail extends Component {
         console.log(this.state.transactions)
         const { transactions } = this.state
         return (
-            <div className="d-flex jcc aic layout-body">
-                <div style={{ width: '100%', padding: 8 }}>
-                    <Table bordered
-                        size="small"
-                        columns={columns}
-                        dataSource={transactions}
-                        rowKey={record => record.id_transaction} />
+            <Fragment>
+                <h3>Detalles de la cuenta: </h3>
+                <p>Aquí podrás ver todas las transacciones disponibles de tu cuenta.</p>
+                <div className="d-flex layout-body">
+                    <div style={{ width: '100%', padding: 8 }}>
+                        <Table bordered
+
+                            columns={columns}
+                            dataSource={transactions}
+                            rowKey={record => record.id_transaction} />
+                    </div>
                 </div>
-            </div>
+            </Fragment>
         )
     }
 }

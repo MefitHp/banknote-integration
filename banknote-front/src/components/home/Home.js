@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import moneyImg from '../../assets/money.png'
 
 class Home extends Component {
 	componentWillMount() {
@@ -9,7 +10,11 @@ class Home extends Component {
 	render() {
 		return (
 			<div className="d-flex jcc aic" style={{ height: '90vh' }}>
-				<h1>Home page</h1>
+				<div style={{ fontSize: '3em' }}>
+					<h1>Banknote</h1>
+					<p>Todos tus gastos en el mismo lugar.</p>
+					<img src={moneyImg} alt="money" />
+				</div>
 			</div>
 		)
 	}

@@ -7,6 +7,7 @@ import DashboardLayout from "./components/common/DashboardLayout";
 import MainDashboard from "./components/dashboard/MainDashboard";
 import Accounts from "./components/dashboard/dashboardUtilities/Accounts";
 import AccountsDetail from "./components/dashboard/dashboardUtilities/AccountsDetail";
+import Payments from "./components/dashboard/dashboardUtilities/Payments";
 
 const AppRoute = ({ component: Component, layout: Layout, ...rest }) =>
     (<Route {...rest} render={props => (<Layout> <Component {...props} /> </Layout>)} />)
@@ -19,6 +20,7 @@ const Routes = () => (
         <AppRoute path="/dashboard" layout={DashboardLayout} component={MainDashboard} />
         <AppRoute exact path="/accounts" layout={DashboardLayout} component={Accounts} />
         <AppRoute exact path="/accounts/:id" layout={DashboardLayout} component={AccountsDetail} />
+        <AppRoute exact path="/payments" layout={DashboardLayout} component={Payments} />
     </Switch>
 )
 

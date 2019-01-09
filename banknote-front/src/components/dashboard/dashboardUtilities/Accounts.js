@@ -18,8 +18,7 @@ class Accounts extends Component {
                 fjs.parentNode.insertBefore(js, fjs);
             }
         }(window, document, "script", "sync-widget", "syncWidget");
-        syncWidget.options = { token: "${user.token}", baseDiv: "sync_container", theme: "ligth" };
-        syncWidget.setDev
+        syncWidget.options = { token: "${user.token}", baseDiv: "sync_container", theme: "ligth"};
                     `
         document.body.appendChild(s);
     }

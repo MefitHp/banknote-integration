@@ -34,12 +34,12 @@ height: 90vh;
     padding: 8px;
     margin: 8px;
     width: 47%;
-    height: calc(100vh - 100px);
+    height: calc(100vh - 60px);
 }
 
 .right-side{
      width: 47%;
-     height: calc(100vh - 100px);
+     height: calc(100vh - 60px);
      overflow-y: scroll;
 }
 
@@ -48,10 +48,23 @@ height: 90vh;
     height: 48%;
 }
 
+.left-side .box {
+    overflow-y: scroll;
+    height: 48%;
+}
 .layout-body{
-     height: calc(100vh - 80px);
+     height: calc(100vh - 40px);
 }
 
 .vh{
     height: calc(100vh - 100px);
+}
+
+.float-button {
+position: fixed;
+right: 80px;
+bottom: 80px;
+transition: all 0.2s ease-in 0s;
+z-index: 9999;
+cursor: pointer;
 }

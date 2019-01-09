@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
-import { Layout, Menu, Breadcrumb, Icon, message, Card, Avatar } from 'antd'
+import { Layout, Menu, Icon, message, Card, Avatar } from 'antd'
 import { withRouter, NavLink } from 'react-router-dom';
 import { logoutUser } from '../../API/Auth';
 const { Meta } = Card;
 const { Content, Sider } = Layout;
-const SubMenu = Menu.SubMenu;
 const dflImage = 'https://www.uic.mx/posgrados/files/2018/05/default-user.png'
 
 
@@ -65,18 +64,17 @@ class DashboardLayout extends Component {
 								</NavLink>
 							</Menu.Item>
 							<Menu.Item key="accounts">
-								<NavLink to="/accounts">
+								<a href="/accounts">
 									<Icon type="desktop" />
 									<span>Cuentas</span>
+								</a>
+							</Menu.Item>
+							<Menu.Item key="payments">
+								<NavLink to="/payments">
+									<Icon type="dollar" />
+									<span>Pagos</span>
 								</NavLink>
 							</Menu.Item>
-							<SubMenu
-								key="sub1"
-								title={<span><Icon type="user" /><span>Perfil</span></span>}
-							>
-								<Menu.Item key="3">Principal</Menu.Item>
-								<Menu.Item key="4">Configuraciones</Menu.Item>
-							</SubMenu>
 							<Menu.Item key="logout" onClick={onLogout}>
 								<Icon type="logout" />
 								<span>Cerrar sesión</span>
@@ -84,11 +82,7 @@ class DashboardLayout extends Component {
 						</Menu>
 					</Sider>
 					<Layout>
-						<Content style={{ margin: '0 16px' }}>
-							<Breadcrumb style={{ margin: '16px 0' }}>
-								<Breadcrumb.Item>{user.username}</Breadcrumb.Item>
-								<Breadcrumb.Item>Dashboard</Breadcrumb.Item>
-							</Breadcrumb>
+						<Content style={{ margin: '16px' }}>
 							<div className="layout-body" style={{ background: '#fff', overflowY: 'scroll' }}>
 								{this.props.children}
 							</div>
