@@ -7,3 +7,9 @@ export const createPayment = (payment) => {
         .then(r => r)
         .catch(e => e.response)
 }
+
+export const getPayments = (user) => {
+    return axios.get(`${url}/payments/${user._id}`)
+        .then(r => r)
+        .catch(e => e.response)
+}

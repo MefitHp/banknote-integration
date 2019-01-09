@@ -1,11 +1,12 @@
 import React, { Component, Fragment } from 'react'
-import { Button, Collapse } from 'antd'
+import { Button, Collapse, List, Popover, Avatar, Badge, Icon, Alert, Breadcrumb } from 'antd'
 import { getAccouts, getTransactions } from '../../API/Sync';
 import AccountsWidgets from './dashboardWidgets/AccountsWidgets';
 import TransactionCard from './TransactionCard';
 import { Link } from 'react-router-dom'
 import moment from 'moment'
 import { Bar } from 'react-chartjs-2'
+import { getPayments } from '../../API/User';
 const Panel = Collapse.Panel;
 const customPanelStyle = {
     background: '#f7f7f7',
@@ -30,7 +31,10 @@ class MainDashboard extends Component {
                 ]
             }]
         },
-        isLoaded: false
+        payments: {},
+        isLoaded: false,
+        dataLoaded: false,
+        visible: false,
     }
 
     componentWillMount = () => {
@@ -58,6 +62,15 @@ class MainDashboard extends Component {
             })
             .catch(err => console.log(err))
 
+        getPayments(user)
+            .then(user => {
+                console.log(user)
+                if (user.status === 200) {
+                    this.setState({ payments: user.data.payments, dataLoaded: true })
+                }
+            })
+            .catch(err => console.log(err))
+
     }
 
 
@@ -80,11 +93,63 @@ class MainDashboard extends Component {
         )
     }
 
+    hide = () => {
+        this.setState({
+            visible: false,
+        });
+    }
+
+    handleVisibleChange = (visible) => {
+        this.setState({ visible });
+    }
+
+
     render() {
         const { accounts, charData } = this.state
         console.log(this.state.charData.datasets[0].data)
         return (
             <Fragment>
+                <div style={{ height: 60, justifyContent: 'space-between' }} className="d-flex aic">
+                    <div style={{ paddingLeft: 45, width: '400px' }} className="d-flex aic">
+                        <Breadcrumb>
+                            <Breadcrumb.Item>
+                                <Icon type="schedule" />
+                                <span><strong>Fecha: </strong> {moment().format('DD MMMM YYYY')}</span>
+                            </Breadcrumb.Item>
+                        </Breadcrumb>
+                    </div>
+                    <div style={{ width: '500px', justifyContent: 'space-around' }} className="d-flex" >
+                        <div>
+                            <Popover
+                                content={<p>Mi saldos: $8182</p>}
+                                title="Saldos"
+                            >
+                                <span className="d-flex jcc aic">{
+                                    <Icon style={{ fontSize: '26px', marginRight: 10 }} type="dollar" />
+                                } <strong>Saldo total : </strong>
+                                </span>
+                            </Popover>
+                        </div>
+                        <div>
+                            <Popover
+                                placement="topLeft"
+                                content={<a onClick={this.hide}>Close</a>}
+                                title="Notificaciones"
+                                trigger="click"
+                                visible={this.state.visible}
+                                onVisibleChange={this.handleVisibleChange}
+                            >
+                                <Link to="/dashboard" className="d-flex jcc aic" >
+                                    Notificaciones {
+                                        <Badge count={1}>
+                                            <Icon style={{ fontSize: '26px', marginLeft: 10 }} type="notification" />
+                                        </Badge>
+                                    }
+                                </Link>
+                            </Popover>
+                        </div>
+                    </div>
+                </div>
                 <div className="d-flex fw jcc aic">
                     <div className="left-side" style={{ overflowY: 'scroll' }}>
                         <div className="box">
@@ -108,6 +173,27 @@ class MainDashboard extends Component {
                         <div className="box">
                             <div style={{ padding: 8 }}>
                                 <h4>Pagos recurrentes y metas: </h4>
+                                <div>
+                                    {this.state.dataLoaded ?
+                                        <List
+                                            itemLayout="horizontal"
+                                            dataSource={this.state.payments}
+                                            renderItem={item => (
+                                                <List.Item>
+                                                    <List.Item.Meta
+                                                        avatar={<Avatar size={32} src="https://images.vexels.com/media/users/3/143188/isolated/preview/5f44f3160a09b51b4fa4634ecdff62dd-money-icon-by-vexels.png" />}
+                                                        title={<a href="https://ant.design">{item.paymentName}</a>}
+                                                        description={item.description}
+                                                    />
+                                                </List.Item>
+                                            )}
+                                        />
+                                        :
+                                        <div style={{ height: '100%' }} className="d-flex jcc aic">
+                                            <img style={{ maxHeight: 200 }} src="https://www.tecmam.com.mx/images/icons/loading.gif" alt="loading" />
+                                        </div>
+                                    }
+                                </div>
                                 <Link to="/payments"><Button>Agregar pago recurrente.</Button></Link>
                             </div>
                         </div>
@@ -163,7 +249,7 @@ class MainDashboard extends Component {
                         </div>
                     </div>
                 </div>
-            </Fragment>
+            </Fragment >
         )
     }
 }

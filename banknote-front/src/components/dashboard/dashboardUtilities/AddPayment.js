@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Form, Icon, Input, InputNumber, DatePicker, Button, Select } from 'antd'
-import { createPayment } from '../../../API/User';
+
 
 const FormItem = Form.Item;
 const { Option, OptGroup } = Select;
@@ -18,12 +18,7 @@ class AddPayment extends Component {
                 values.month_count = Number(values.month_count)
                 const user = JSON.parse(localStorage.getItem('user'));
                 values.user = user._id
-                createPayment(values)
-                    .then(r => {
-                        if (r.status === 201) {
-                            console.log('exitoso')
-                        }
-                    }).catch(err => console.log(err))
+                this.props.addPaymentAPI(values)
             }
         });
     }
