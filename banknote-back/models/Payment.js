@@ -24,6 +24,10 @@ const paymentSchema = new Schema({
   month_count: {
     type: Number,
     required: true,
+  },
+  monthly_pay: {
+    type: Number,
+    required: true
   }
 }, {
     timestamps: {

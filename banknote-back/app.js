@@ -89,5 +89,8 @@ const authRoutes = require('./routes/auth');
 app.use('/api', authRoutes);
 const paymentRoutes = require('./routes/payments')
 app.use('/payments', paymentRoutes)
+app.all('*', (req, res) => {
+  res.sendFile(`${dirname_}/public/index.html`)
+})
 
 module.exports = app;

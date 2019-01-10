@@ -14,15 +14,20 @@ router.post("/add", (req, res, next) => {
 })
 
 router.get('/:id', (req, res, next) => {
-  console.log(req.params)
   const { id } = req.params
   User.findOne({ _id: id }).populate('payments')
     .then(user => {
-      console.log(user)
       res.status(200).json(user)
     })
     .catch(err => res.status(500).json(err))
 })
 
+router.delete('/delete/:id', (req, res, next) => {
+  const { id } = req.params
+  Payment.findByIdAndDelete({ _id: id })
+    .then(payment =>
+      res.status(200).json(payment))
+    .catch(err => res.status(500).json(err))
+})
 
 module.exports = router

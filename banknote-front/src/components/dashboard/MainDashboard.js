@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react'
-import { Button, Collapse, List, Popover, Avatar, Badge, Icon, Alert, Breadcrumb } from 'antd'
+import { Button, Collapse, List, Popover, Avatar, Badge, Icon, Breadcrumb } from 'antd'
 import { getAccouts, getTransactions } from '../../API/Sync';
 import AccountsWidgets from './dashboardWidgets/AccountsWidgets';
 import TransactionCard from './TransactionCard';
@@ -31,10 +31,12 @@ class MainDashboard extends Component {
                 ]
             }]
         },
-        payments: {},
+        payments: [],
         isLoaded: false,
         dataLoaded: false,
         visible: false,
+        totalBalance: 0,
+        totalPayments: 0,
     }
 
     componentWillMount = () => {
@@ -58,20 +60,32 @@ class MainDashboard extends Component {
                             allTransactions.push(...transactions.data.response)
                             this.setState({ accounts, allTransactions, charData })
                             this.updateChartData()
+                            getPayments(user)
+                                .then(user => {
+                                    if (user.status === 200) {
+                                        this.setState({ payments: user.data.payments, dataLoaded: true })
+                                    }
+                                })
+                                .catch(err => console.log(err))
+
                         }).catch(err => console.log(err)))
             })
             .catch(err => console.log(err))
 
-        getPayments(user)
-            .then(user => {
-                console.log(user)
-                if (user.status === 200) {
-                    this.setState({ payments: user.data.payments, dataLoaded: true })
-                }
-            })
-            .catch(err => console.log(err))
+        setTimeout(() => {
+            let { payments, accounts, totalBalance, totalPayments } = this.state
+            totalBalance = accounts.reduce((totalBalance, item) => {
+                return totalBalance += item.balance
+            }, 0)
 
+            totalPayments = payments.reduce((totalPayments, item) => {
+                return totalPayments += item.monthly_pay
+            }, 0)
+            this.setState({ totalBalance, totalPayments })
+        }, 4000)
     }
+
+
 
 
     updateChartData = () => {
@@ -93,6 +107,7 @@ class MainDashboard extends Component {
         )
     }
 
+
     hide = () => {
         this.setState({
             visible: false,
@@ -105,8 +120,7 @@ class MainDashboard extends Component {
 
 
     render() {
-        const { accounts, charData } = this.state
-        console.log(this.state.charData.datasets[0].data)
+        const { accounts, charData, totalBalance, totalPayments } = this.state
         return (
             <Fragment>
                 <div style={{ height: 60, justifyContent: 'space-between' }} className="d-flex aic">
@@ -121,19 +135,22 @@ class MainDashboard extends Component {
                     <div style={{ width: '500px', justifyContent: 'space-around' }} className="d-flex" >
                         <div>
                             <Popover
-                                content={<p>Mi saldos: $8182</p>}
+                                content={<p>
+                                    Tu saldo al final de mes será de: <br /> <strong>$ {totalBalance - totalPayments} MXN</strong> <br />
+                                    El total de tus pagos de este mes es de: <br /> <strong>$ {totalPayments} MXN</strong> <br />
+                                </p>}
                                 title="Saldos"
                             >
                                 <span className="d-flex jcc aic">{
                                     <Icon style={{ fontSize: '26px', marginRight: 10 }} type="dollar" />
-                                } <strong>Saldo total : </strong>
+                                } <strong> Saldo total :  {totalBalance === 0 ? 'Calculando..' : <span style={totalBalance < 500 ? { color: 'red' } : { color: 'green' }}>${totalBalance} MXN</span>} </strong>
                                 </span>
                             </Popover>
                         </div>
                         <div>
                             <Popover
                                 placement="topLeft"
-                                content={<a onClick={this.hide}>Close</a>}
+                                content={<Link to="/dashboard" onClick={this.hide}>Close</Link>}
                                 title="Notificaciones"
                                 trigger="click"
                                 visible={this.state.visible}
@@ -141,7 +158,7 @@ class MainDashboard extends Component {
                             >
                                 <Link to="/dashboard" className="d-flex jcc aic" >
                                     Notificaciones {
-                                        <Badge count={1}>
+                                        <Badge dot>
                                             <Icon style={{ fontSize: '26px', marginLeft: 10 }} type="notification" />
                                         </Badge>
                                     }
@@ -185,6 +202,12 @@ class MainDashboard extends Component {
                                                         title={<a href="https://ant.design">{item.paymentName}</a>}
                                                         description={item.description}
                                                     />
+                                                    <div className="d-flex jcc aic">
+                                                        <div style={{ textAlign: 'center' }} >
+                                                            {item.month_count === 0 ? <span>Pago recurrente (Hasta cancelar)</span> : <span>Pago diferido ({item.month_count} meses)</span>}<br />
+                                                            <span style={{ margin: 'auto' }}>${item.monthly_pay} por mes.</span>
+                                                        </div>
+                                                    </div>
                                                 </List.Item>
                                             )}
                                         />
@@ -194,7 +217,9 @@ class MainDashboard extends Component {
                                         </div>
                                     }
                                 </div>
-                                <Link to="/payments"><Button>Agregar pago recurrente.</Button></Link>
+                                <div className="d-flex jcc aic">
+                                    <Link to="/payments"><Button size="large" type="primary">Agregar pago recurrente.</Button></Link>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -205,13 +230,13 @@ class MainDashboard extends Component {
                                     <h4>Cuentas disponibles: </h4>
                                     <AccountsWidgets accounts={accounts} />
                                     <div className="d-flex jcc aic">
-                                        <a href="/accounts"><Button>Agregar cuenta</Button></a>
+                                        <a href="/accounts"><Button type="primary">Agregar cuenta</Button></a>
                                     </div>
                                 </Fragment>
                                 :
                                 <div >
                                     <h2 style={{ textAlign: 'center' }}>No hay cuentas agregadas</h2>
-                                    <a href="/accounts"><Button>Agregar cuenta</Button></a>
+                                    <a href="/accounts"><Button size="large" type="primary">Agregar cuenta</Button></a>
                                 </div>
                             }
                         </div>

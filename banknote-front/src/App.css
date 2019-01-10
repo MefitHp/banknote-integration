@@ -70,3 +70,56 @@ transition: all 0.2s ease-in 0s;
 z-index: 9999;
 cursor: pointer;
 }
+.slide{
+    width: 100%;
+    height: 100%;
+    padding: 5% 10%;
+    box-sizing: border-box;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+
+}
+.slide h1{
+    margin: 0;
+}
+.slogan{
+    width: 500px;
+    flex-grow: 2;
+}
+.c-form{
+    border:1px solid #ccc;
+    width: 200px;
+    flex-grow: 1;
+    height: 450px;
+    box-shadow: 7px 7px 5px 0px rgba(242,239,242,1);
+    border-radius: 10px;
+    padding: 2%;
+    box-sizing: border-box;
+}
+.c-form h3{
+    font-size: 36px;
+    margin: 0 0 20px 0;
+}
+.c-form p{
+    font-size: 24px;
+    
+}
+.btn-r{
+    width: 70%;
+    margin-left: 15%;
+    height: 50px;
+    border: none;
+    background-color: #40a9ff;
+    color:white;
+    font-size: 20px;
+    text-transform: uppercase;
+}
+
+.main-back{
+    background-image: url('http://www.eratsa.com/images/fondo%20azul%202.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center bottom;
+    height: calc(100vh - 48px)
+}

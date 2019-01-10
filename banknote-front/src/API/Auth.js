@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { createSyncUser, initUserSession } from './Sync';
-const urlBack = 'http://localhost:5000/api'
+const urlBack = 'https://banknote.herokuapp.com/api'
 
 export const loginUser = (user) => {
     return axios.post(urlBack + '/login', user, { withCredentials: true })

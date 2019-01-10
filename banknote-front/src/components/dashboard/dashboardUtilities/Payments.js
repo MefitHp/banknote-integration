@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react'
-import { Button, Modal, Card, Icon, Avatar, Input, Form, Select, DatePicker, InputNumber, message } from 'antd'
-import { getPayments } from '../../../API/User';
+import { Button, Modal, Card, Icon, Avatar, notification, Input, Form, Select, DatePicker, InputNumber, message } from 'antd'
+import { getPayments, deletePaymentAPI } from '../../../API/User';
 import moment from 'moment'
 import { createPayment } from '../../../API/User';
 
@@ -34,6 +34,11 @@ class Payments extends Component {
                 values.end_date = values.payday.add(values.month_count, 'months').toDate()
                 values.payday = values.payday.toDate()
                 values.month_count = Number(values.month_count)
+                if (values.month_count === 0) {
+                    values.monthly_pay = values.amount
+                } else {
+                    values.monthly_pay = Math.floor(values.amount / values.month_count)
+                }
                 const user = JSON.parse(localStorage.getItem('user'));
                 values.user = user._id
                 createPayment(values)
@@ -41,13 +46,21 @@ class Payments extends Component {
                         if (r.status === 201) {
                             const { payments } = this.state
                             payments.push(values)
-                            message.success('Agregado correctamente')
+                            notification['success']({
+                                message: '¡Exitoso!',
+                                description: 'El pago se ha creado',
+                            });
                             this.setState({ payments, visible: false })
                         }
                         else {
                             message.error('Hubo un error')
                         }
-                    }).catch(err => console.log(err))
+                    }).catch(err => {
+                        notification['error']({
+                            message: 'Ooops!',
+                            description: err,
+                        })
+                    });
             }
         });
     }
@@ -64,9 +77,27 @@ class Payments extends Component {
         });
     }
 
+    deletePayment = (id) => {
+        deletePaymentAPI(id)
+            .then(deleted => {
+                if (deleted.status === 200) {
+                    const { payments } = this.state
+                    var pos = payments.map(payment => { return payment._id; }).indexOf(id)
+                    payments.splice(pos, 1)
+                    notification['success']({
+                        message: '¡Exitoso!',
+                        description: 'El pago se ha eliminado',
+                    });
+                    this.setState({ payments })
+                }
+            }
+            )
+            .catch(err => console.log(err))
+    }
+
     render() {
         const { visible, payments, dataLoaded } = this.state
-        const { handleCancel } = this
+        const { handleCancel, deletePayment } = this
         const { getFieldDecorator } = this.props.form;
         return (
             <div style={{ padding: 12 }}>
@@ -77,7 +108,7 @@ class Payments extends Component {
                         payments.map((payment, index) => (
                             <Card
                                 style={{ width: 380, margin: 8 }}
-                                actions={[<Icon type="delete" />]}
+                                actions={[<Icon type="delete" onClick={() => deletePayment(payment._id)} />]}
                                 key={index}
                             >
                                 <Meta

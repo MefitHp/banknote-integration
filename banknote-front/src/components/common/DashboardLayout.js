@@ -64,10 +64,10 @@ class DashboardLayout extends Component {
 								</NavLink>
 							</Menu.Item>
 							<Menu.Item key="accounts">
-								<a href="/accounts">
+								<NavLink to="/accounts">
 									<Icon type="desktop" />
 									<span>Cuentas</span>
-								</a>
+								</NavLink>
 							</Menu.Item>
 							<Menu.Item key="payments">
 								<NavLink to="/payments">
