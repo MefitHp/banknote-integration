@@ -88,11 +88,12 @@ cursor: pointer;
     flex-grow: 2;
 }
 .c-form{
+    background-color: white;
     border:1px solid #ccc;
     width: 200px;
     flex-grow: 1;
     height: 450px;
-    box-shadow: 7px 7px 5px 0px rgba(242,239,242,1);
+    box-shadow: 7px 7px 5px 0px rgb(99, 99, 99);
     border-radius: 10px;
     padding: 2%;
     box-sizing: border-box;
