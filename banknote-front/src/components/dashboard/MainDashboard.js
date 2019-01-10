@@ -230,7 +230,7 @@ class MainDashboard extends Component {
                                     <h4>Cuentas disponibles: </h4>
                                     <AccountsWidgets accounts={accounts} />
                                     <div className="d-flex jcc aic">
-                                        <a href="/accounts"><Button type="primary">Agregar cuenta</Button></a>
+                                        <Link href="/accounts"><Button type="primary">Agregar cuenta</Button></Link>
                                     </div>
                                 </Fragment>
                                 :
